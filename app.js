@@ -2,6 +2,7 @@
 const text = document.querySelector(".text");
 const btnRejouer = document.querySelector(".rejouer");
 const erreur = document.querySelector(".erreur");
+const timer = document.querySelector(".timer");
 
 //LISTE DE PHRASES
 let phrases = ["tomate", "sanglier", "biere"];
@@ -12,6 +13,8 @@ let cpt = 0;
 let finiTest, caracteres;
 let nbrRand, nbrRandomPartieAvant;
 let nbrErreur = 0;
+let chrono;
+
 
 //GENERE UNE PHRASE ALEATOIRE ET L'AFFICHE
 let phraseRandom = () => {
@@ -39,6 +42,22 @@ let lancement = () => {
   caracteres[cpt].style.background = "green";
   caracteres[cpt].style.color = "white";
   caracteres[cpt].style.padding = "3px";
+  temps();
+};
+
+
+let temps = () => {
+  let m = 0;
+  let s = 0;
+  timer.innerHTML = `0${m}:0${s}`;
+   chrono = setInterval(() => {
+    s++;
+    s > 9 ? (timer.innerHTML = `0${m}:${s}`) : (timer.innerHTML = `0${m}:0${s}`);
+    if (s > 59) {
+      s = 0;
+      m++;
+    }
+  }, 1000);
 };
 
 phraseRandom();
@@ -68,11 +87,13 @@ document.body.addEventListener("keyup", (e) => {
         console.log("sortie");
         finiTest = true;
         btnRejouer.style.display = "block";
+        clearInterval(chrono);
       }
     } else {
       caracteres[cpt].style.background = "red";
       nbrErreur++;
-      erreur.innerHTML = `${nbrErreur} Erreurs`;
+      erreur.innerHTML = `${nbrErreur} Erreur`;
+      nbrErreur>1?erreur.innerHTML+="s":"";
     }
   }
   console.log(cpt + " " + caracteres.length);
@@ -81,6 +102,7 @@ document.body.addEventListener("keyup", (e) => {
 //DETECTION CLICK BTN REJOUER
 btnRejouer.addEventListener("click", () => {
   cpt = 0;
+  nbrErreur = 0;
   phraseRandom();
   lancement();
   btnRejouer.style.display = "none";
