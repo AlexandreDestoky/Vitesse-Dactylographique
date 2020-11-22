@@ -1,38 +1,56 @@
+//SELECTION DU DOM
 const text = document.querySelector(".text");
+const btnRejouer = document.querySelector(".rejouer");
+const erreur = document.querySelector(".erreur");
 
-let phrases = [
-  "lorem quasi!",
-  // "2Lorem ipsum dolor, sit amet consectetur adipisicing elit. Aut, fuga!",
-  // "3Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur, suscipit!",
-];
+//LISTE DE PHRASES
+let phrases = ["tomate", "sanglier", "biere"];
 
+//VARIABLES DE TRAVAIL
 let phraseAffiche, tabLettres;
 let cpt = 0;
+let finiTest, caracteres;
+let nbrRand, nbrRandomPartieAvant;
 
+//GENERE UNE PHRASE ALEATOIRE ET L'AFFICHE
 let phraseRandom = () => {
   //on génère une phrase aléatoire a partir du tableau de phrases
-  let nbrRand = Math.floor(Math.random() * phrases.length);
-  phraseAffiche = phrases[nbrRand];
+  //on relance la génération tant que le nombre est le même que celui de la partie d'avant
+  do {
+    nbrRand = Math.floor(Math.random() * phrases.length);
+    phraseAffiche = phrases[nbrRand];
+  } while (nbrRand == nbrRandomPartieAvant);
+
+  nbrRandomPartieAvant = nbrRand;
+
   //on met la phrase en mettant chaque caractères dans un span pour modifier son affichage plus tard
   tabLettres = phraseAffiche.split("");
   tabLettres = tabLettres.map((i) => "<span>" + i + "</span>");
   text.innerHTML = tabLettres.join("");
 };
 
+//INITIALISE LES PARAMETRES PAR DEFAUT
+let lancement = () => {
+  caracteres = document.querySelectorAll(".text span");
+  finiTest = false;
+
+  //Style par défaut avant même de taper sur une touche
+  caracteres[cpt].style.background = "green";
+  caracteres[cpt].style.color = "white";
+  caracteres[cpt].style.padding = "3px";
+};
+
 phraseRandom();
-let caracteres = document.querySelectorAll(".text span");
-let finiTest = false;
+lancement();
 
-//Style par défaut avant même de taper sur une touche
-caracteres[cpt].style.background = "green";
-caracteres[cpt].style.color = "white";
-caracteres[cpt].style.padding = "3px";
-
+//DETECTION DES TOUCHES
 document.body.addEventListener("keyup", (e) => {
   //on ne détecte les touches que si le test n'est pas fini et que
   //la touche n'est pas maj sinon erreur qd on veut faire un "L" par ex
+
   if (finiTest == false && e.key != "Shift") {
     //si bonne lettre on fait le style et on avance sinon on met en rouge
+
     if (e.key == text.textContent[cpt]) {
       caracteres[cpt].style.padding = "0px";
       caracteres[cpt].style.background = "white";
@@ -46,16 +64,19 @@ document.body.addEventListener("keyup", (e) => {
       } else {
         console.log("sortie");
         finiTest = true;
-        rejouer();
+        btnRejouer.style.display = "block";
       }
     } else {
       caracteres[cpt].style.background = "red";
     }
   }
   console.log(cpt + " " + caracteres.length);
-
 });
 
-let rejouer = () => {
-  
-}
+//DETECTION CLICK BTN REJOUER
+btnRejouer.addEventListener("click", () => {
+  cpt = 0;
+  phraseRandom();
+  lancement();
+  btnRejouer.style.display = "none";
+});

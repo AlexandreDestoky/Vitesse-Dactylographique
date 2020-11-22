@@ -1,14 +1,37 @@
 .text {
-  background : lightblue;
+  background: lightblue;
   padding: 15px;
   font-size: 30px;
-  font-family: 'Roboto', sans-serif;
+  height: 30vh;
+  margin: 10px;
   /* font-weight: bold; */
 }
 
 body {
+  font-family: "Roboto", sans-serif;
   margin: 0;
   padding: 0;
   background-color: mediumturquoise;
 }
 
+.rejouer {
+  max-width: fit-content;
+  background-color: grey;
+  padding: 10px;
+  font-size: 30px;
+  margin: 10px auto;
+  color: #eee;
+  border-radius: 5px;
+  border: 2px solid #eee;
+  display: none;
+  cursor: pointer;
+}
+
+.score {
+  background-color: olivedrab;
+  display: flex;
+  justify-content: space-evenly;
+  height:5vh;
+  font-size: 20px;
+  align-items: center;
+}
