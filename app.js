@@ -11,6 +11,7 @@ let phraseAffiche, tabLettres;
 let cpt = 0;
 let finiTest, caracteres;
 let nbrRand, nbrRandomPartieAvant;
+let nbrErreur = 0;
 
 //GENERE UNE PHRASE ALEATOIRE ET L'AFFICHE
 let phraseRandom = () => {
@@ -43,6 +44,8 @@ let lancement = () => {
 phraseRandom();
 lancement();
 
+erreur.innerHTML = `${nbrErreur} Erreur`;
+
 //DETECTION DES TOUCHES
 document.body.addEventListener("keyup", (e) => {
   //on ne détecte les touches que si le test n'est pas fini et que
@@ -68,6 +71,8 @@ document.body.addEventListener("keyup", (e) => {
       }
     } else {
       caracteres[cpt].style.background = "red";
+      nbrErreur++;
+      erreur.innerHTML = `${nbrErreur} Erreurs`;
     }
   }
   console.log(cpt + " " + caracteres.length);
