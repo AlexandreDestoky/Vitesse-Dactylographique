@@ -1,0 +1,14 @@
+.text {
+  background : lightblue;
+  padding: 15px;
+  font-size: 30px;
+  font-family: 'Roboto', sans-serif;
+  /* font-weight: bold; */
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: mediumturquoise;
+}
+
